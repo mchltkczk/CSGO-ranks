@@ -5,10 +5,6 @@ import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
 import { RanksData } from "./interfaces/API";
 
-interface Props {
-  fetchedRanksData: RanksData[];
-}
-
 function App() {
   const [ranksData, setRanksData] = useState<RanksData[]>([]);
 
@@ -16,14 +12,26 @@ function App() {
     fetchNewsData(setRanksData);
     console.log(ranksData);
   }, []);
-
-  return (
-    <div className='wrapper'>
-      <Header />
-      <Content ranksData={ranksData} />
-      <Footer />
-    </div>
-  );
+  if (ranksData.length === 0) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+        Ładowanie...
+      </div>
+    );
+  } else
+    return (
+      <div className='wrapper'>
+        <Header />
+        <Content ranksData={ranksData} />
+        <Footer />
+      </div>
+    );
 }
 
 export default App;
